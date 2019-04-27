@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz", "Quiz\Quiz.csproj", "{B2EAF0D2-A069-4261-B69E-A0530114AEEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeCon", "PokeCon\PokeCon.csproj", "{2885211A-2279-4183-A108-CBB675F35270}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2EAF0D2-A069-4261-B69E-A0530114AEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EAF0D2-A069-4261-B69E-A0530114AEEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EAF0D2-A069-4261-B69E-A0530114AEEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EAF0D2-A069-4261-B69E-A0530114AEEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2885211A-2279-4183-A108-CBB675F35270}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2885211A-2279-4183-A108-CBB675F35270}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2885211A-2279-4183-A108-CBB675F35270}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2885211A-2279-4183-A108-CBB675F35270}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D787D7D7-E7FD-4AD3-879C-C09E20E32E1A}
+	EndGlobalSection
+EndGlobal
