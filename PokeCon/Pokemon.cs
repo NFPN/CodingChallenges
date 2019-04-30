@@ -14,7 +14,7 @@
         public string Nome { get; }
         public int Dano { get; }
         public int Defesa { get; }
-        public int Vitalidade { get; }
+        public int Vitalidade { get; set; }
 
     }
 }
