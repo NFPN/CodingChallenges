@@ -12,10 +12,11 @@ namespace PokeCon
         public Jogador(string nome, Pokemon[] pokemons)
         {
             Nome = nome;
-            Pokemons = pokemons;
+            Pokemons = pokemons == null ? new Pokemon[3] : pokemons;
         }
 
-        public string Nome{ get; }
+        public string Nome { get; }
         public Pokemon[] Pokemons { get; set; }
     }
 }
+

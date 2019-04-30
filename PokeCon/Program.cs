@@ -104,11 +104,11 @@ namespace PokeCon
 
             //Adiciona jogador 1
             Escreve("Digite o nome do primeiro Treinador de pokemons: ");
-            jogadores[0] = new Jogador(Console.ReadLine(), new Pokemon[3]);
+            jogadores[0] = new Jogador(Console.ReadLine(),null);
 
             //Adiciona jogador 2
             Escreve("\nDigite o nome do segundo Treinador de pokemons: ");
-            jogadores[1] = new Jogador(Console.ReadLine(), new Pokemon[3]);
+            jogadores[1] = new Jogador(Console.ReadLine(),null);
 
             Escreve("\nCada jogador deve escolher um pokemon por vez (Max 3)\n");
 
@@ -271,7 +271,7 @@ namespace PokeCon
                         //Pokemon fora de combate
                         if (dano >= jogadores[player2Index].Pokemons[pokeDefID].Vitalidade)
                         {
-                            Escreve("Seu ataque foi extremamente....EFICIENTE!", false);
+                            Escreve("Seu ataque foi extremamente....EFICIENTE!");
                             Escreve(jogadores[player2Index].Pokemons[pokeDefID].Nome + " está fora de combate!");
                             jogadores[player2Index].Pokemons[pokeDefID].Vitalidade = 0;
                         }
