@@ -53,11 +53,8 @@ namespace PokeCon
         /// </summary>
         static public void Escreve(string texto, bool pulaLinha = true)
         {
-            if (pulaLinha)
-                Console.WriteLine(texto);
-            else
-                Console.Write(texto);
-            //pulaLinha == true  ? Console.WriteLine(texto) : Console.Write(texto);
+            if (pulaLinha) Console.WriteLine(texto);
+            else Console.Write(texto);
         }
 
         /// <summary>
@@ -108,8 +105,9 @@ namespace PokeCon
             //Adiciona jogador 1
             Escreve("Digite o nome do primeiro Treinador de pokemons: ");
             jogadores[0] = new Jogador(Console.ReadLine(), new Pokemon[3]);
+
             //Adiciona jogador 2
-            Escreve("Digite o nome do segundo Treinador de pokemons: ");
+            Escreve("\nDigite o nome do segundo Treinador de pokemons: ");
             jogadores[1] = new Jogador(Console.ReadLine(), new Pokemon[3]);
 
             Escreve("\nCada jogador deve escolher um pokemon por vez (Max 3)\n");
@@ -173,38 +171,41 @@ namespace PokeCon
         private static void ComecaBatalha(Jogador[] jogadores)
         {
             //jogador inicial é aleátorio, após é sempre intercalado
-
             Random rnd = new Random();
-            int playerIndex = rnd.Next(1000) % 2 == 0 ? 0 : 1;
+            int player1Index = rnd.Next(1000) % 2 == 0 ? 0 : 1,
+                player2Index = player1Index == 1 ? 0 : 1;
 
-            string escolha = string.Empty;
+
+            string escolha = "", ganhador = "";
             bool existeEscolha;
 
-            int pokeAtkID = 0, pokeDefID = 0, dano =0;
+            int pokeOut = 0, pokeAtkID = 0, pokeDefID = 0, turno = 1, dano = 0, aux = 0;
 
-            Escreve("\nA batalha pokemon irá começar!\n\tO jogador escolhido foi ");
-            for (int i = 0; i < 5; i++)
-            {
-                Thread.Sleep(50);
-                Escreve(".", false);
-            }
-            Escreve(jogadores[playerIndex % 2].Nome, false);
+            Escreve("\nA batalha pokemon irá começar!\n\tO jogador escolhido foi: " + jogadores[player1Index].Nome);
+
+            Escreve("\nAperte qualquer tecla para começar...");
+            Console.ReadKey();
 
 
+            Escreve("\n\n\tTurno " + turno + "\n---------------------------------\n");
             //jogador escolhe pokemon para atacar
             do
             {
                 existeEscolha = false;
-                Escreve("\n\n" + jogadores[playerIndex % 2].Nome + " escolha o pokémon com qual deseja ATACAR: ");
+                Escreve("\n\n" + jogadores[player1Index].Nome + " escolha o pokémon com qual deseja ATACAR: ");
 
                 //Mostra e escolhe pokemon atacante
-                foreach (var pokemon in jogadores[playerIndex % 2].Pokemons)
-                    Escreve(pokemon.Nome);
+                foreach (var pokemon in jogadores[player1Index].Pokemons)
+                {
+                    if (pokemon.Vitalidade > 0)
+                        Escreve(pokemon.Nome);
+                }
                 escolha = PegaValor("");
 
                 //foreach (var pokemon in jogadores[playerIndex % 2].Pokemons)
-                for (int i = 0; i < jogadores[playerIndex % 2].Pokemons.Length; i++)
-                    if (escolha == jogadores[playerIndex % 2].Pokemons[i].Nome)
+                for (int i = 0; i < jogadores[player1Index].Pokemons.Length; i++)
+                    if (escolha.ToLower() == jogadores[player1Index].Pokemons[i].Nome.ToLower()&&
+                        jogadores[player1Index].Pokemons[i].Vitalidade > 0)
                     {
                         existeEscolha = true;
                         pokeAtkID = i;
@@ -214,7 +215,7 @@ namespace PokeCon
 
                 if (!existeEscolha)
                 {
-                    Escreve("\nEste pokemon não está em sua mochila!\n");
+                    Escreve("\nEste pokemon não está em sua mochila, ou está inconsciente\n");
                     continue;
                 }
                 else
@@ -223,14 +224,17 @@ namespace PokeCon
                     do
                     {
                         existeEscolha = false;
-                        Escreve("\n\n" + jogadores[playerIndex % 2 + 1].Nome + " escolha o pokémon com qual deseja DEFENDER: ");
+                        Escreve("\n\n" + jogadores[player2Index].Nome +
+                            " escolha o pokémon com qual deseja DEFENDER: ");
 
-                        // Mostra e escolhe pokemon defensor do segundo jogador
-                        foreach (var pokemon in jogadores[playerIndex % 2 + 1].Pokemons)
-                            Escreve(pokemon.Nome);
+                        // Mostra e escolhe pokemon defensor
+                        foreach (var pokemon in jogadores[player2Index].Pokemons)
+                            if (pokemon.Vitalidade > 0)
+                                Escreve(pokemon.Nome);
                         escolha = PegaValor("");
-                        for (int i = 0; i < jogadores[playerIndex % 2 + 1].Pokemons.Length; i++)
-                            if (escolha == jogadores[playerIndex % 2 + 1].Pokemons[i].Nome)
+                        for (int i = 0; i < jogadores[player2Index].Pokemons.Length; i++)
+                            if (escolha.ToLower() == jogadores[player2Index].Pokemons[i].Nome.ToLower()&&
+                                jogadores[player1Index].Pokemons[i].Vitalidade > 0)
                             {
                                 existeEscolha = true;
                                 pokeDefID = i;
@@ -239,7 +243,7 @@ namespace PokeCon
 
                         if (!existeEscolha)
                         {
-                            Escreve("\nEste pokemon não está em sua mochila!\n");
+                            Escreve("\nEste pokemon não está em sua mochila, ou está inconsciente\n");
                             continue;
                         }
                         else
@@ -248,39 +252,65 @@ namespace PokeCon
 
                     //mostra pokemons escolhidos e mostra resultado pokemonDefendor.hp = atk - pokemonDefensor.def
                     Escreve("\n" +
-                        jogadores[playerIndex % 2].Pokemons[pokeAtkID].Nome + " ataca " +
-                        jogadores[playerIndex % 2 + 1].Pokemons[pokeDefID].Nome);
+                        jogadores[player1Index].Pokemons[pokeAtkID].Nome + " ataca " +
+                        jogadores[player2Index].Pokemons[pokeDefID].Nome);
 
-                    dano = jogadores[playerIndex % 2].Pokemons[pokeAtkID].Dano - jogadores[playerIndex % 2 + 1].Pokemons[pokeDefID].Defesa;
+                    dano = jogadores[player1Index].Pokemons[pokeAtkID].Dano -
+                           jogadores[player2Index].Pokemons[pokeDefID].Defesa;
 
-                    if(dano <=0)
+                    //Pokemon defendeu
+                    if (dano <= 0)
                     {
                         dano = 1;
-                        Escreve("Seu ataque foi extremamente");
-                        for (int i = 0; i < 5; i++)
-                        {
-                            Thread.Sleep(50);
-                            Escreve(".", false);
-                        }
-                        Escreve("INEFICIENTE",false);
-
-                        Escreve(jogadores[playerIndex % 2 + 1].Pokemons[pokeDefID].Nome + " Perde 1 de vida");
-                        jogadores[playerIndex % 2 + 1].Pokemons[pokeDefID].Vitalidade -= 1;
+                        Escreve("Seu ataque foi extremamente....INEFICIENTE");
+                        Escreve(jogadores[player2Index].Pokemons[pokeDefID].Nome + " Perde 1 de vida");
+                        jogadores[player2Index].Pokemons[pokeDefID].Vitalidade -= 1;
                     }
                     else
                     {
-                        if (dano)
+                        //Pokemon fora de combate
+                        if (dano >= jogadores[player2Index].Pokemons[pokeDefID].Vitalidade)
                         {
-
+                            Escreve("Seu ataque foi extremamente....EFICIENTE!", false);
+                            Escreve(jogadores[player2Index].Pokemons[pokeDefID].Nome + " está fora de combate!");
+                            jogadores[player2Index].Pokemons[pokeDefID].Vitalidade = 0;
                         }
-
+                        //Pokemon levou dano mas não está fora de combate
+                        else
+                        {
+                            Escreve(jogadores[player2Index].Pokemons[pokeDefID].Nome + " recebeu " + dano + " de dano");
+                            jogadores[player2Index].Pokemons[pokeDefID].Vitalidade -= dano;
+                        }
                     }
-
+                    Escreve("\nAperte qualquer tecla para passar o turno...");
+                    Console.ReadKey();
                 }
 
-                Escreve("\n\nPróximo turno\n---------------------------------\n");
-                playerIndex++;
+                //Se um jogador tiver todos os pokemons com a vitalidade zerada o jogo acaba
+                for (int i = 0; i < 2; i++)
+                {
+                    pokeOut = 0;
+                    for (int j = 0; j < 3; j++)
+                        if (jogadores[i].Pokemons[j].Vitalidade == 0)
+                            pokeOut++;
+                    if (pokeOut >= 3)
+                    {
+                        ganhador = i == 0 ? jogadores[1].Nome : jogadores[0].Nome;
+                        break;
+                    }
+                }
+                if (pokeOut >= 3)
+                    break;
+                //Se não continua e troca os indices
+                turno++;
+                Escreve("\n\n\tTurno "+turno+"\n---------------------------------\n");
+                aux = player1Index;
+                player1Index = player2Index;
+                player2Index = aux;
             } while (true);
+
+            Escreve("\n\nO ganhador foi " + ganhador + "\n\n\tPARABENS VOCE É O MELHOR MESTRE POKEMON!\n\n\n");
+            Console.ReadKey();
         }
     }
 }
