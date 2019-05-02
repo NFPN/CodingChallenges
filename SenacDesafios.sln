@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz", "Quiz\Quiz.csproj", "{B2EAF0D2-A069-4261-B69E-A0530114AEEB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokeCon", "PokeCon\PokeCon.csproj", "{2885211A-2279-4183-A108-CBB675F35270}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JogoDaVelha-TicTacToe", "JogoDaVelha-TicTacToe\JogoDaVelha-TicTacToe.csproj", "{3F30436B-35F1-4788-A1A0-D7638C442625}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2885211A-2279-4183-A108-CBB675F35270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2885211A-2279-4183-A108-CBB675F35270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2885211A-2279-4183-A108-CBB675F35270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F30436B-35F1-4788-A1A0-D7638C442625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F30436B-35F1-4788-A1A0-D7638C442625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F30436B-35F1-4788-A1A0-D7638C442625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F30436B-35F1-4788-A1A0-D7638C442625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
