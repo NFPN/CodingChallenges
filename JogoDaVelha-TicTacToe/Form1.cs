@@ -15,7 +15,7 @@ namespace JogoDaVelha_TicTacToe
         static public Button[] gridButtons = new Button[] { };
         static public char[] players = new char[] { 'O', 'X' };
         static public char actualPlayer;
-        static public bool gameStarted = false, gameOver = false;
+        static public bool gameStarted = false, gameOver = false, velha;
 
 
         static Random rnd = new Random();
@@ -44,19 +44,47 @@ namespace JogoDaVelha_TicTacToe
             }
         }
 
+        //Testa a matriz :
+        // 0 1 2
+        // 3 4 5
+        // 6 7 8
         private bool VerifyGridForWinners()
         {
-            if (
-                gridButtons[0].Text == gridButtons[1].Text && gridButtons[1].Text == gridButtons[2].Text ||
-                gridButtons[0].Text == gridButtons[3].Text && gridButtons[3].Text == gridButtons[6].Text ||
-                gridButtons[0].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[8].Text ||
-                gridButtons[1].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[7].Text ||
-                gridButtons[2].Text == gridButtons[5].Text && gridButtons[5].Text == gridButtons[8].Text ||
-                gridButtons[2].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[6].Text ||
-                gridButtons[3].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[5].Text ||
-                gridButtons[6].Text == gridButtons[7].Text && gridButtons[7].Text == gridButtons[8].Text
-               )
-                if (gridButtons[0].Text != "-" && gridButtons[4].Text != "-" && gridButtons[8].Text != "-")
+            //o o o
+            //o o -
+            //o - o
+            if (gridButtons[0].Text == gridButtons[1].Text && gridButtons[1].Text == gridButtons[2].Text||
+                gridButtons[0].Text == gridButtons[3].Text && gridButtons[3].Text == gridButtons[6].Text||
+                gridButtons[0].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[8].Text)
+                        if (gridButtons[0].Text != "-")
+                            return true;
+            //- o -
+            //- o -
+            //- o -
+            if (gridButtons[1].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[7].Text)
+                if (gridButtons[1].Text != "-")
+                    return true;
+
+            //- - o
+            //- o o
+            //o - o
+            if (gridButtons[2].Text == gridButtons[5].Text && gridButtons[5].Text == gridButtons[8].Text ||
+                gridButtons[2].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[6].Text)
+                if (gridButtons[2].Text != "-")
+                    return true;
+
+            //- - -
+            //o o o
+            //- - -
+            if (gridButtons[3].Text == gridButtons[4].Text && gridButtons[4].Text == gridButtons[5].Text)
+                if (gridButtons[3].Text != "-")
+                    return true;
+
+            //- - -
+            //- - -
+            //o o o
+            if (gridButtons[6].Text == gridButtons[7].Text && gridButtons[7].Text == gridButtons[8].Text)
+                if (gridButtons[6].Text != "-")
                     return true;
 
             return false;
@@ -66,16 +94,11 @@ namespace JogoDaVelha_TicTacToe
         {
             if (gameStarted)
             {
-                Button clickedButton = sender as Button;
-                if (clickedButton == null)
+                if ((Button)sender == null)
                     return;
 
-                do
-                {
-                    if (clickedButton.Text == "-")
-                        clickedButton.Text = actualPlayer.ToString();
-                } while (clickedButton.Text != "-");
-
+                if (((Button)sender).Text == "-")
+                    ((Button)sender).Text = actualPlayer.ToString();
 
                 if (VerifyGridForWinners())
                 {
@@ -86,11 +109,29 @@ namespace JogoDaVelha_TicTacToe
                 }
                 else
                 {
-                    if (actualPlayer == players[0])
-                        actualPlayer = players[1];
+
+                    velha = true;
+                    foreach (var button in gridButtons)
+                    {
+                        if (button.Text == "-")
+                            velha = false;
+                    }
+
+                    if (velha)
+                    {
+                        gameLog.BackColor = Color.Gray;
+                        gameLog.Text = "Ih deu velha!";
+                        gameStarted = false;
+                        gameButton.Text = "Novo Jogo";
+                    }
                     else
-                        actualPlayer = players[0];
-                    gameLog.Text = "Sua vez: " + actualPlayer;
+                    {
+                        if (actualPlayer == players[0])
+                            actualPlayer = players[1];
+                        else
+                            actualPlayer = players[0];
+                        gameLog.Text = "Sua vez: " + actualPlayer;
+                    }
                 }
             }
         }
