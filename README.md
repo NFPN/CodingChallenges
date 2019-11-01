@@ -1,5 +1,5 @@
 # CodingChallenges
-C# Programming tests using visual studio proposed by teachers. 
+C# Programming tests using visual studio proposed by brazillian teachers. 
 
 Obs: Pt-Br lang used for ui text and comments.
 
